@@ -1,0 +1,44 @@
+class Solution:
+    def countLessEqual(self, arr, x):
+        n = len(arr)
+        
+        # Step 1: Find pivot (index of smallest element)
+        def findPivot():
+            low, high = 0, n - 1
+            while low < high:
+                mid = (low + high) // 2
+                if arr[mid] > arr[high]:
+                    low = mid + 1
+                else:
+                    high = mid
+            return low
+        
+        pivot = findPivot()
+        
+        # Binary search to count ≤ x in sorted part
+        def countLE(low, high):
+            ans = -1
+            while low <= high:
+                mid = (low + high) // 2
+                if arr[mid] <= x:
+                    ans = mid
+                    low = mid + 1
+                else:
+                    high = mid - 1
+            return ans
+        
+        count = 0
+        
+        # Left part: 0 → pivot-1
+        if pivot > 0:
+            idx = countLE(0, pivot - 1)
+            if idx != -1:
+                count += idx + 1
+        
+        # Right part: pivot → n-1
+        idx = countLE(pivot, n - 1)
+        if idx != -1:
+            count += idx - pivot + 1
+        
+        return count
+        
