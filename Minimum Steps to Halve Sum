@@ -1,0 +1,21 @@
+class Solution:
+  def minOperations(self, arr):
+    # code here
+    max_heap = [-x for x in arr]
+    heapq.heapify(max_heap)
+    
+    sumVal = sum(arr)
+    target = sumVal / 2
+    ops = 0
+    
+    while sumVal > target:
+        largest = -heapq.heappop(max_heap)
+        
+        # Halve it
+        half = largest / 2
+        sumVal -= half
+        heapq.heappush(max_heap, -half)
+        
+        ops += 1
+    
+    return ops
