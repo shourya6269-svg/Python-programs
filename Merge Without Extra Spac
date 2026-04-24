@@ -1,0 +1,14 @@
+class Solution:
+    def mergeArrays(self, a, b):
+        c=a+b
+        c.sort()
+        n=len(a)
+        p=0
+        for i in range (len(c)):
+            if i<n:
+                a[i]=c[i]
+            if i>=n:
+                b[p]=c[i]
+                p+=1
+        return a,b        
+        
