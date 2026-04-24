@@ -1,0 +1,19 @@
+class Solution:
+    def combinationSum2(self, candidates, target):
+        candidates.sort()
+        result = []
+        stack = [(0, [], target)]   
+        while stack:
+            start, current, remain = stack.pop()
+            if remain == 0:
+                result.append(current)
+                continue
+            for i in range(start, len(candidates)):
+                if i > start and candidates[i] == candidates[i - 1]:
+                    continue
+                if candidates[i] > remain:
+                    break
+                stack.append((i + 1, current + [candidates[i]], remain -                 candidates[i]))
+        return result
+
+        
