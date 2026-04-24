@@ -1,0 +1,29 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+        result = []
+
+        def solve(index, target, current):
+            
+            # If target is 0 → we found answer
+            if target == 0:
+                result.append(current[:])
+                return
+            
+            # If index out of range → stop
+            if index >= len(candidates):
+                return
+            
+            # If we take the number
+            if candidates[index] <= target:
+                current.append(candidates[index])
+                solve(index, target - candidates[index], current)
+                current.pop()
+            
+            # If we skip the number
+            solve(index + 1, target, current)
+
+        solve(0, target, [])
+        return result
+
+
+        
