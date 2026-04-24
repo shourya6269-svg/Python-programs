@@ -1,0 +1,27 @@
+class Solution:
+    def countPairs(self, arr):
+        seen = set()
+        count = 0
+        
+        for s in arr:
+            s_list = list(s)
+            
+            for i in range(len(s_list)):
+                original = s_list[i]
+                
+                # try all different characters at position i
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    if c == original:
+                        continue
+                    
+                    s_list[i] = c
+                    candidate = ''.join(s_list)
+                    
+                    if candidate in seen:
+                        count += 1
+                
+                s_list[i] = original  # restore
+            
+            seen.add(s)
+        
+        return count
