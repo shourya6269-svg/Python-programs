@@ -1,0 +1,40 @@
+class Solution:
+    def maxPeople(self, arr):
+        n = len(arr)
+        if n == 0:
+            return 0
+        
+        left = [0] * n
+        right = [0] * n
+        
+        # LEFT VISIBILITY
+        stack = []
+        for i in range(n):
+            count = 0
+            
+            while stack and stack[-1] < arr[i]:
+                stack.pop()
+                count += 1   # count each visible person
+            
+            if stack:
+                count += 1   # first taller/equal person
+            
+            left[i] = count
+            stack.append(arr[i])
+        
+        # RIGHT VISIBILITY
+        stack = []
+        for i in range(n - 1, -1, -1):
+            count = 0
+            
+            while stack and stack[-1] < arr[i]:
+                stack.pop()
+                count += 1
+            
+            if stack:
+                count += 1
+            
+            right[i] = count
+            stack.append(arr[i])
+        
+        return max(left[i] + right[i] + 1 for i in range(n))
